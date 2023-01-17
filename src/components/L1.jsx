@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@mui/material/Button';
 import { Container, width } from '@mui/system';
 import TextField from '@mui/material/TextField';
@@ -11,114 +11,123 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 
 const L1 = () => {
 
-  const { register, handleSubmit, errors } = useForm();
-  // const ref=register
+    const { register, handleSubmit } = useForm({
+        criteriaMode: 'all',
+    });
+    // const ref=register
 
-  const submit = (data) => {
-    console.log(data)
-  }
-
-
-
-  return (
-    <div>
-      <Container sx={{ width: "400px", borderRadius: "20px" }} >
-        <div className="form" >
-          <form onSubmit={handleSubmit(submit)} >
-            <div>
-
-              <TextField
-                label="UserName"
-                variant="outlined"
-                {...register('UserName', { required: true })}
-
-              />
-            </div>
-
-            <br /><br />
-
-            <div>
-              <TextField
-                label="Email" variant="outlined"
-
-                {...register('Email', { required: true })}
+    const submit = (data) => {
+        console.log(data)
+    }
 
 
-              />
-            </div>
-            <br /><br />
+    return (
+        <div>
+            <Container sx={{ width: "400px", borderRadius: "20px" }} >
+                <div className="form" >
+                    <form onSubmit={handleSubmit(submit)} >
+                        <div>
 
-            <div>
+                            <TextField
+                                label="UserName"
+                                variant="outlined"
+                                {...register('UserName', {
+                                    required: true,
+                                    pattern: {
+                                        value: /^[A-Z][a-zA-Z]+$/
 
-              <TextField
-                label="Password"
-                variant="outlined"
-                {...register('Password', { required: true })}
+                                    }
+                                })}
 
+                            />
 
-              />
-            </div>
-            <div>
-              <br /><br />
+                        </div>
 
-              <TextField
-                label="City"
-                variant="outlined"
-                {...register('Address.city', { required: true })}
+                        <br /><br />
 
+                        <div>
+                            <TextField
+                                label="Email" variant="outlined"
 
-              />
-            </div>
-            <div>
-              <br /><br />
-
-              <TextField
-                label="ZipCode"
-                variant="outlined"
-                {...register('Address.zipcode', { required: true })}
+                                {...register('Email', { required: true })}
 
 
-              />
-            </div>
-            <br /><br />
-            <div>
-              <FormControl fullWidth>
+                            />
+                        </div>
+                        <br /><br />
 
-                {/* <InputLabel variant='outline' >Age</InputLabel> */}
-                <InputLabel variant="outlined" >
-                  Age
-                </InputLabel>
-                
-                <NativeSelect
-                  defaultValue={0}
-                  input={<OutlinedInput label="Age" />}
-                  inputProps={{
-                    ...register('age', { required: true }),
+                        <div>
 
-                    id: 'uncontrolled-native'
-                  }}
-                >
-                  <option value={0} >Select Your Age</option>
-                  <option value={10}>Ten</option>
-                  <option value={20}>Twenty</option>
-                  <option value={30}>Thirty</option>
-                </NativeSelect>
-              </FormControl>
-            </div>
-            <br /><br />
+                            <TextField
+                                label="Password"
+                                variant="outlined"
+                                {...register('Password', { required: true })}
 
-            <Button variant="contained" type='submit' >Submit</Button>
-          </form>
+
+                            />
+                        </div>
+                        <div>
+                            <br /><br />
+
+                            <TextField
+                                label="City"
+                                variant="outlined"
+                                {...register('Address.city', { required: true })}
+
+
+                            />
+                        </div>
+                        <div>
+                            <br /><br />
+
+                            <TextField
+                                label="ZipCode"
+                                variant="outlined"
+                                {...register('Address.zipcode', { required: true, pattern: /\d+/ })}
+
+
+                            />
+                            {/* {errors.Address.zipcode && <p>{errors.Address.zipcode.message}</p>} */}
+                        </div>
+                        <br /><br />
+                        <div>
+                            <FormControl fullWidth>
+
+                                {/* <InputLabel variant='outline' >Age</InputLabel> */}
+                                <InputLabel variant="outlined" >
+                                    Age
+                                </InputLabel>
+
+                                <NativeSelect
+                                    defaultValue={0}
+                                    input={<OutlinedInput label="Age" />}
+                                    inputProps={{
+                                        ...register('age', { required: true }),
+
+                                        id: 'uncontrolled-native'
+                                    }}
+                                >
+                                    <option value={0} >Select Your Age</option>
+                                    <option value={10}>Ten</option>
+                                    <option value={20}>Twenty</option>
+                                    <option value={30}>Thirty</option>
+                                </NativeSelect>
+                            </FormControl>
+                        </div>
+                        <br /><br />
+
+                        <Button variant="contained" type='submit' >Submit</Button>
+                    </form>
+                </div>
+                <br /><br />
+
+
+
+            </Container>
+
+
         </div>
-        <br /><br />
-
-
-
-      </Container>
-
-
-    </div>
-  )
+    )
 }
 
 export default L1
